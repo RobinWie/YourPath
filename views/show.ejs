@@ -1,0 +1,131 @@
+<%- include("partials/header") %>
+
+<% var res = JSON.parse(results) %>
+<% var rec_yt = res.rec_yt %>
+<% var rec_sf = res.rec_sf %>
+<% var res_yt = res.res_yt %>
+<% var res_sf = res.res_sf %>
+
+<header class="jumbotron">
+    <h1>Your Results</h1>
+</header>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>Your Recommendations</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3>On Youtube...</h3>
+    </div>
+</div>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% for (var i = 0; i < rec_yt.id.length; i++) {%>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src=<%=rec_yt.thumbnail_url[i]%>>
+                <div class="caption">
+                    <a href=<%="https://www.youtube.com/watch?v="+rec_yt.id[i]%>><%=rec_yt.title[i]%> - <%=rec_yt.channel[i]%></a>
+                </div>
+                <div class="caption">
+                    <h4><%=rec_yt.channel[i]%></h4>
+                </div>
+                <button class="btn btn-primary glyphicon glyphicon-hand-up" id=<%=rec_yt.id[i]%> onclick="add_like('<%=currentUser.cluster%>','<%=rec_yt.id[i]%>', 'youtube')">Like</button>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3>On Spotify...</h3>
+    </div>
+</div>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% for (var i = 0; i < rec_sf.name.length; i++) {%>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src=<%=rec_sf.cover[i]%>>
+                <div class="caption">
+                    <a href=<%=rec_sf.preview[i]%>><%=rec_sf.name[i]%></a>
+                </div>
+                <div class="caption">
+                    <h4><%=rec_sf.artist[i]%></h4>
+                    <h4><%=Math.round(rec_sf.duration[i]/60000 * 100)/100%> min</h4>
+                </div>
+                <button class="btn btn-primary glyphicon glyphicon-hand-up" id=<%=rec_sf.id[i]%> onclick="add_like('<%=currentUser.cluster%>','<%=rec_sf.id[i]%>', 'spotify')"> Like</button>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h2>All Results</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3>On Youtube...</h3>
+    </div>
+</div>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% for (var i = 0; i < res_yt.id.length; i++) {%>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src=<%=res_yt.thumbnail_url[i]%>>
+                <div class="caption">
+                    <a href=<%="https://www.youtube.com/watch?v="+res_yt.id[i]%>><%=res_yt.title[i]%> - <%=res_yt.channel[i]%></a>
+                </div>
+                <div class="caption">
+                    <h4><%=res_yt.channel[i]%></h4>
+                </div>
+                <button class="btn btn-primary glyphicon glyphicon-hand-up" id=<%=res_yt.id[i]%> onclick="add_like('<%=currentUser.cluster%>','<%=res_yt.id[i]%>', 'youtube')">Like</button>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h3>On Spotify...</h3>
+    </div>
+</div>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% for (var i = 0; i < res_sf.name.length; i++) {%>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src=<%=res_sf.cover[i]%>>
+                <div class="caption">
+                    <a href=<%=res_sf.preview[i]%>><%=res_sf.name[i]%></a>
+                </div>
+                <div class="caption">
+                    <h4><%=res_sf.artist[i]%></h4>
+                    <h4><%=Math.round(res_sf.duration[i]/60000 * 100)/100%> min</h4>
+                </div>
+                <button class="btn btn-primary glyphicon glyphicon-hand-up" id=<%=res_sf.id[i]%> onclick="add_like('<%=currentUser.cluster%>','<%=res_sf.id[i]%>', 'spotify')"> Like</button>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    function add_like(cluster_id, rec_id, platform){
+        // Send a POST request
+        axios({
+            method: 'post',
+            url: '/like',
+            data: {
+                cluster_id: cluster_id,
+                rec_id: rec_id,
+                platform: platform
+            }
+        });
+    }
+</script>
+
+<%- include("partials/footer") %>

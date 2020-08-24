@@ -1,0 +1,7 @@
+tekore==2.1.2
+pymongo==3.10.1
+pandas==1.0.3
+google_auth_oauthlib==0.4.1
+google_api_python_client==1.10.0
+scikit_learn==0.23.2
+dnspython==2.0.0

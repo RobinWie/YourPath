@@ -1,0 +1,18 @@
+<%- include("partials/header") %>
+
+<div class="row">
+    <h1 style="text-align: center">Search</h1>
+    <div style="width: 30%; margin: 20px auto;">
+        <form action="/results" method="post">
+            <div class="form-group">
+                <input class="form-control" type="text" name="keyword" placeholder="Personality Development" required>
+            </div>
+            <div class="form-group">
+                <input class="btn btn-lg btn-primary btn-block" type="submit" value="Search Now!">
+            </div>
+        </form>
+    </div>
+    <p>Note: Calling the APIs and databases may take some time!</h1>
+</div>
+
+<%- include("partials/footer") %>
